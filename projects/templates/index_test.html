@@ -1,0 +1,9 @@
+{% extends "project/index.html" %}
+
+{% block title %}second page {{ name }}{% endblock %}
+{% block content %}
+<h1>second page {{name}}</h1>
+<h3>{{ date }}</h3>
+<p>{{ text|safe }}</p>
+{% endblock %}
+
