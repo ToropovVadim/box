@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class OrdersConfig(AppConfig):
+class ProjectsConfig(AppConfig):
     name = 'projects'
-    verbose_name = 'Заказы'
+    verbose_name = 'Блог'

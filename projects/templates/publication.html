@@ -1,0 +1,32 @@
+{% extends "project/index.html" %}
+
+{% block title %}{{ publication.pub_title }}{% endblock %}
+{% block content %}
+<h3>{{ publication.pub_title }}</h3>
+<h5>{{ publication.pub_name }}</h5>
+<p>{{ publication.pub_text|safe }}</p>
+
+<h5>{{ publication.pub_date }}</h5>
+
+<hr>
+<h4 >Коментарии:</h4>
+{% if comments_list %}
+    {% for c in comments_list %}
+            <h5>{{c.author}}</h5>
+            <p>{{c.comment_text}}</p>
+    {% endfor %}
+{% else %}
+Коментарий не найден!
+{% endif %}
+
+<hr>
+
+<form action="{% url 'projects:comments' publication.id %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Ваше имя"/>
+    <br/><br/>
+    <textarea name="text" placeholder="Текст коментария" cols="30" rows="10"></textarea><br>
+    <input type="submit" value="Оставить коментарий">
+</form>
+
+{% endblock %}

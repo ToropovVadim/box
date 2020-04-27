@@ -1,4 +1,5 @@
 from django.contrib import admin
-from .models import SalesOrders
+from .models import Publication, Comment
 
-admin.site.register(SalesOrders)
+admin.site.register(Publication)
+admin.site.register(Comment)
