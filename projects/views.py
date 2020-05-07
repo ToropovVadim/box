@@ -1,7 +1,8 @@
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from datetime import datetime
-from project import settings
+from django.urls import reverse
+from  project import settings
 from .models import Publication
 
 
@@ -11,9 +12,14 @@ def publication(request, number_id):
     except:
         raise Http404('Статьи не найдено!')
 
-    comments_list = pubs.comment_set.order_by('-id')[:10]
+    comments_list = pubs.comment_set.order_by('-id')[:5]
 
-    return render(request, 'publication.html', {'publication': pubs, 'comments_list': comments_list})
+    context = {
+        'publication': pubs,
+        'comments_list': comments_list
+    }
+
+    return render(request, 'publication.html', context)
 
 
 def contact(request):
@@ -21,15 +27,20 @@ def contact(request):
 
 
 def publications(request):
-    context = Publication.objects.all()
-    return render(request, 'publications.html', {
-        'publication': context
-    })
+    pubs = Publication.objects.all().order_by('id')
+    context = {
+        'publication': pubs
+    }
+    return render(request, 'publications.html', context)
 
 
 def publish(request):
     if request.method == 'GET':
-        return render(request, 'publish.html')
+        pubs = Publication.objects.all().order_by('id')
+        context = {
+            'publication': pubs
+        }
+        return render(request, 'publish.html', context)
     else:
         secret = request.POST['secret']
         name = request.POST['name']
@@ -53,7 +64,8 @@ def publish(request):
         pub_text=text.replace('\n', '<br />'),
         pub_date=datetime.now()
     ).save()
-    return redirect('/publications')
+
+    return redirect('/')
 
 
 def comments(request, number_id):
@@ -64,4 +76,4 @@ def comments(request, number_id):
 
     pubs.comment_set.create(author=request.POST['name'], comment_text=request.POST['text'])
 
-    return redirect('/publications')
+    return HttpResponseRedirect(reverse('projects:publication', args=(pubs.id,)))

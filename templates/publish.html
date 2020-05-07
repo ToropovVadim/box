@@ -1,0 +1,41 @@
+{% extends "project/index.html" %}
+
+{% block title %}Создаем публикацыю{% endblock %}
+
+{% block content %}
+<p>{{ error }}</p>
+<h2 class="m-4">Редактировать или удалить</h2>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">Дата создания</th>
+        <th scope="col">Название</th>
+        <th scope="col">Редактирование</th>
+        <th scope="col">Удаление</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for i in publication %}
+    <tr>
+        <td>{{i.id}}</td>
+        <td>{{i.pub_date}}</td>
+        <td>{{i.pub_title}}</td>
+        <th><a href="">редактировать</a></th>
+        <th><a href="">удалить</a></th>
+    </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2 class="m-4">Создаем статью</h2>
+<form action="{% url 'projects:publish' %}" method="post">
+    {% csrf_token %}
+    <input type="password" name="secret" placeholder="Secret Key"/>
+    <br/><br/>
+    <textarea name="name" placeholder="Название" rows="1" cols="60"></textarea><br>
+    <textarea name="text" placeholder="Текст" cols="110" rows="15"></textarea><br>
+    <input type="submit" value="Опубликовать">
+</form>
+{% endblock %}

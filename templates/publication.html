@@ -5,6 +5,8 @@
 <h3>{{ publication.pub_title }}</h3>
 <h5>{{ publication.pub_name }}</h5>
 <p>{{ publication.pub_text|safe }}</p>
+<img src="{{ publication.pub_image.url }}" width="700" height="450" class="img-thumbnail" align="top">
+
 
 <h5>{{ publication.pub_date }}</h5>
 

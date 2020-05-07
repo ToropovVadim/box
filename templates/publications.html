@@ -1,0 +1,18 @@
+{% extends "project/index.html" %}
+
+{% block title %} My block {% endblock %}
+
+{% block content %}
+<h3>Список всех статей :</h3>
+
+
+    {% for i in publication %}
+        <ul class="list-group mt-4">
+            <li class="list-group-item">
+            <b><a href="{% url 'projects:publication' i.id %}" class="m-3">{{i.pub_title}}</a></b>
+            {{i.pub_date}}
+            </li>
+        </ul>
+    {% endfor %}
+
+{% endblock %}

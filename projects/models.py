@@ -6,15 +6,14 @@ class Publication(models.Model):
     pub_title = models.CharField('Название публткацыи', max_length=80)
     pub_text = models.TextField('Текст')
     pub_date = models.DateTimeField('Дата')
-    pub_image = models.ImageField('Картинка')
-
+    pub_image = models.ImageField('Картинка', upload_to="image/")
 
     class Meta:
         verbose_name = 'Публикацыя'
         verbose_name_plural = 'Публикацыи'
 
     def __str__(self):
-        return self.pub_title
+        return '%s:%s' %(self.pub_title, self.pub_name)
 
 
 class Comment(models.Model):
